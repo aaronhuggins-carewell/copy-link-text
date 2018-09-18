@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# This task needs to left as it is
+# This is for external plugins and programs to query the available tasks
+function __show_tasks {
+        compgen -A function | grep -v "^_"
+}
+
+function _logger {
+        local d=$(date --rfc-3339=ns)
+        echo -ne "$d\t$@\n"
+}
+
+function clean {
+        rm dist/*.zip
+        rm -rf dist/chrome/*
+}
+
+function build {
+        cp -r src/* dist/chrome && cp share/manifest.json dist/chrome;
+}
+
+function watch {
+        local watchdir="./src/"
+        _logger "Watcher started"
+        inotifywait -m -r -e close_write --format '%w%f' "${watchdir}" | \
+        while read events; do
+                _logger "Build triggered"
+                Task build
+                _logger "Build finished"
+        done
+}
+
+function pack {
+        local version="$(cat ./share/manifest.json | jq -r .version)"
+        cd ./dist/chrome && zip -r ../addon-chrome-$version.zip *
+}
+
+# simple alias
+function package {
+        pack
+}
+
+
+function help {
+        echo "$0 <task> <args>"
+        echo "Tasks:"
+        __show_tasks | cat -n
+}
+
+function default {
+        __show_tasks
+}
+
+${@:-default}
+
