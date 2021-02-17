@@ -1,16 +1,16 @@
 {
-        "extensionName": {
-                "message": "Copy Link Text",
-                "description": ""
-        },
+  "extensionName": {
+    "message": "Copy Link Text",
+    "description": ""
+  },
 
-        "extensionDescription": {
-                "message": "Copies the text inside links",
-                "description": ""
-        },
+  "extensionDescription": {
+    "message": "Copies the text inside links",
+    "description": ""
+  },
 
-        "menuItemCopyLinkText": {
-                "message": "Copy link text",
-                "description": ""
-        }
+  "menuItemCopyLinkText": {
+    "message": "Copy link text",
+    "description": ""
+  }
 }
