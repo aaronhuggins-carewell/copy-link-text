@@ -1,16 +1,22 @@
-(function (window, document) {
-  'use strict'
+const _browser = chrome
+let target
 
-  /* global chrome */
-
-  const _browser = chrome
-  let target
-
-  document.addEventListener('contextmenu', (e) => {
-    target = e.target
-  }, false)
-
-  _browser.runtime.onMessage.addListener(() => {
-    _browser.runtime.sendMessage(null, target.innerText.trim())
+const toClipboard = (text) => {
+  navigator.clipboard.writeText(text).then(() => {
+    // happy path
+  }, (err) => {
+    console.error('Async: Could not copy text: ', err)
   })
-})(window, document)
+}
+
+document.addEventListener('contextmenu', (e) => {
+  target = e.target
+}, false)
+
+_browser.runtime.onMessage.addListener((e) => {
+  switch (e.type) {
+    case 'link':
+      toClipboard(target.closest('a').innerText.trim())
+      break
+  }
+})
