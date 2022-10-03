@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.superevilmegaco.com:google-chrome/copy-link-text.git"
+    "url": "git@github.com:superevilmegaco/copy-link-text.git"
   },
   "author": "Marco Kellershoff <marco@kellershoff.net>",
   "license": "ISC",
